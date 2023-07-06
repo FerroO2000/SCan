@@ -31,10 +31,6 @@ jobs:
         json-file: ${{ fromJson(needs.list-json-files.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
-      - name: Download jsondbc artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: jsondbc-artifact
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
