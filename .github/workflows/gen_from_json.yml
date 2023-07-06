@@ -35,11 +35,11 @@ jobs:
           extract: true
           out-file-path: "jsondbc"
           
-      - name: Share jsondbc
-        uses: actions/upload-artifact@v3
-        with:
-          name: jsondbc-artifact
-          path: jsondbc/jsondbc
+      #- name: Share jsondbc
+        #uses: actions/upload-artifact@v3
+        #with:
+          #name: jsondbc-artifact
+          #path: jsondbc/jsondbc
           
   generate:
     needs: [list-json-files, download-jsondbc]
@@ -49,8 +49,8 @@ jobs:
         json-file: ${{ fromJson(needs.list-json-files.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
-      - name: Download jsondbc artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: jsondbc-artifact
+      #- name: Download jsondbc artifact
+        #uses: actions/download-artifact@v3
+        #with:
+          #name: jsondbc-artifact
       - run: ls -R
