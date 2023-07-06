@@ -34,6 +34,9 @@ jobs:
       - name: Get filenames
         run: |
           echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
+          file=$(echo ${{ matrix.json-file }} | cut -d. -f1)
+          lcFile=${file,,}
+          echo $lcFile
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
