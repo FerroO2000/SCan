@@ -45,7 +45,7 @@ jobs:
         
       - name: Get filenames
         run: |
-          echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> GITHUB_ENV
+          echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
         
       - name: Upload dbc artifact
         run: echo $DBC_FILE
