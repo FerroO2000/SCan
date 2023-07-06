@@ -34,9 +34,11 @@ jobs:
       - name: Get filenames
         run: |
           echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
-          file=$(echo ${{ matrix.json-file }} | cut -d. -f1)
-          lcFile=${file,,}
-          echo $(basename $lcFile)
+          path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
+          lcPath=${path,,}
+          lcFile=$(basename $lcPath)
+          echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
+          echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -68,5 +70,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{env.JSON_FILES_DIR}}
-          path: ${{env.DBC_FILE}}
+          path: |
+            ${{env.DBC_FILE}}
+            ${{env.C_FILE}}
+            ${{env.H_FILE}}
           
