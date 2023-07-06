@@ -33,10 +33,10 @@ jobs:
           
       - name: Get filenames
         run: |
-          echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           lcPath=${path,,}
           lcFile=$(basename $lcPath)
+          echo "DBC_FILE=$(echo $lcFile).dbc" >> $GITHUB_ENV
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
           
@@ -58,13 +58,10 @@ jobs:
         run: python3 -m pip install cantools
           
       - name: Convert JSON file to dbc
-        run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }}
+        run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }} --out ${{ env.DBC_FILE }}
         
       - name: Generate .c .h
         run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }}
-        
-      - name: Print dir
-        run: ls -R
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
