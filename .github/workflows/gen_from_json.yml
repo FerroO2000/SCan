@@ -22,27 +22,9 @@ jobs:
       - id: set-matrix
         run: echo "::set-output name=matrix::$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')"
 
-  download-jsondbc:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Download latest jsodbc release
-        uses: robinraju/release-downloader@v1.8
-        with:
-          repository: "squadracorsepolito/jsondbc"
-          latest: true
-          fileName: "jsondbc_Linux_x86_64.tar.gz"
-          extract: true
-          out-file-path: "jsondbc"
-          
-      - name: Share jsondbc
-        uses: actions/upload-artifact@v3
-        with:
-          name: jsondbc-artifact
-          path: jsondbc/jsondbc
           
   generate:
-    needs: [list-json-files, download-jsondbc]
+    needs: list-json-files
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -53,5 +35,15 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: jsondbc-artifact
+          
+      - name: Download latest jsodbc release
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: "squadracorsepolito/jsondbc"
+          latest: true
+          fileName: "jsondbc_Linux_x86_64.tar.gz"
+          extract: true
+          out-file-path: "jsondbc"
+          
       - name: Convert JSON file to dbc
-        run: ./jsondbc version #convert --in ${{ matrix.json-file }}
+        run: ./jsondbc/jsondbc version #convert --in ${{ matrix.json-file }}
