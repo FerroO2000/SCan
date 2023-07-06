@@ -30,7 +30,7 @@ jobs:
         json-file: ${{ fromJson(needs.list-json-files.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
-      - run: cat ${{ martix.json-file }}
+      - run: cat ${{ matrix.json-file }}
 
   build:
     # The type of runner that the job will run on
