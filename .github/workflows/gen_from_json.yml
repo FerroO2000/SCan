@@ -21,7 +21,6 @@ jobs:
       - uses: actions/checkout@v3
       - id: set-matrix
         run: echo "::set-output name=matrix::$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')"
-
           
   generate:
     needs: list-json-files
@@ -42,4 +41,11 @@ jobs:
           out-file-path: "jsondbc"
           
       - name: Convert JSON file to dbc
-        run: ./jsondbc/jsondbc version #convert --in ${{ matrix.json-file }}
+        run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }}
+        
+      - name: Get file name without extension
+        run: echo "FILENAME=$(echo ${{ matrix.json-file }} | cut -d. -f1)" >> $GITHUB_ENV
+        
+      - name: Upload dbc artifact
+        run: echo $FILENAME
+        #uses: actions/upload-artifact@v3
