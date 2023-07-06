@@ -45,12 +45,11 @@ jobs:
         
       - name: Get filenames
         run: |
-          echo "FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1 | basename)" >> $GITHUB_ENV
           echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{env.FILE}}
+          name: ${{env.JSON_FILES_DIR}}
           path: ${{env.DBC_FILE}}
           
