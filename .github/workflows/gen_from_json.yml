@@ -34,4 +34,7 @@ jobs:
           extract: true
           out-file-path: "jsondbc"
           
+      - name: Print directory
+        run: ls
+          
       
