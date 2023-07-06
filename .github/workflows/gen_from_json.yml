@@ -21,23 +21,13 @@ jobs:
       - uses: actions/checkout@v3
       - id: set-matrix
         run: echo "::set-output name=matrix::$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')"
-        
-  test-matrix:
-    needs: list-json-files
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        json-file: ${{ fromJson(needs.list-json-files.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v3
-      - run: cat ${{ matrix.json-file }}
 
-  build:
+  download-jsondbc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-          
-      - uses: robinraju/release-downloader@v1.8
+      - name: Download latest jsodbc release
+        uses: robinraju/release-downloader@v1.8
         with:
           repository: "squadracorsepolito/jsondbc"
           latest: true
@@ -45,7 +35,22 @@ jobs:
           extract: true
           out-file-path: "jsondbc"
           
-      - name: Print directory
-        run: ls
+      - name: Share jsondbc
+        uses: actions/upload-artifact@v3
+        with:
+          name: jsondbc-artifact
+          path: jsondbc/jsondbc
           
-      
+  generate:
+    needs: [list-json-files, download-jsondbc]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        json-file: ${{ fromJson(needs.list-json-files.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download jsondbc artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: jsondbc-artifact
+      - run: ls -R
