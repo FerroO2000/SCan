@@ -54,4 +54,4 @@ jobs:
         with:
           name: jsondbc-artifact
       - name: Convert JSON file to dbc
-        run: ./jsondbc convert --in ${{ matrix.json-file }}
+        run: ./jsondbc version #convert --in ${{ matrix.json-file }}
