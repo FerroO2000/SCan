@@ -31,6 +31,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
           
+      - name: Get filenames
+        run: |
+          echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
+          
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
         with:
@@ -40,12 +44,23 @@ jobs:
           extract: true
           out-file-path: "jsondbc"
           
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+          
+      - name: Install cantools
+        run: python3 -m pip install cantools
+          
       - name: Convert JSON file to dbc
         run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }}
         
-      - name: Get filenames
-        run: |
-          echo "DBC_FILE=$(echo ${{ matrix.json-file }} | cut -d. -f1).dbc" >> $GITHUB_ENV
+      - name: Generate .c .h
+        run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }}
+        
+      - name: Print dir
+        run: ls -R
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
