@@ -34,7 +34,7 @@ jobs:
           
       - name: Get filenames
         run: |
-          mkdir ${{ env.ARTIFACT_DIR }}
+          mkdir -p ${{ env.ARTIFACT_DIR }}
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           lcPath=${path,,}
           lcFile=$(basename $lcPath)
