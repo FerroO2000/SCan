@@ -94,7 +94,7 @@ jobs:
           git commit -m "generated utils from JSON"
           git push 
         
-      - name: Upload dbc artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.JSON_FILES_DIR }}
