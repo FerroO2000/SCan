@@ -39,7 +39,6 @@ jobs:
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
           echo "DBF_FILE=$(echo $lcFile).dbf" >> $GITHUB_ENV
-          echo "XLSX_FILE=$(echo $lcFile).xlsx" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -62,13 +61,14 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-cache
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
           
       - name: Install cantools
-        if: steps.pip-cache.outputs.cache-hit != 'true'
         run: python3 -m pip install cantools
         
       - name: Install canmatrix
-        if: steps.pip-cache.outputs.cache-hit != 'true'
         run: python3 -m pip install canmatrix
           
       - name: Convert JSON file to dbc
@@ -79,9 +79,6 @@ jobs:
         
       - name: Convert dbc to dbf
         run: canconvert ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
-        
-      - name: Convert dbc to xlsx
-        run: canconvert ${{ env.DBC_FILE }} ${{ env.XLSX_FILE }}
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
