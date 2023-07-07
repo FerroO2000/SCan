@@ -1,4 +1,4 @@
-name: GenFromJSON
+name: Generate Utils From JSON
 
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
@@ -9,6 +9,7 @@ on:
 
 env:
   JSON_FILES_DIR: SC22EVO
+  PYTHON_VERSION: 3.10
 
 jobs:
   list-json-files:
@@ -52,15 +53,14 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-          
+          python-version: ${{ env.PYTHON_VERSION }}
       
       - name: Cache pip packages
         id: pip-cache
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-cache
+          key: ${{ runner.os }}-pip-python${{ env.PYTHON_VERSION }}
           restore-keys: |
             ${{ runner.os }}-pip-
             ${{ runner.os }}-
