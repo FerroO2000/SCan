@@ -19,9 +19,9 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v3
-      - id: set-matrix
+      - name: Select JSON files
+        id: set-matrix
         run: echo "matrix=$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
-        #run: echo "::set-output name=matrix::$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')"
           
   generate:
     needs: list-json-files
@@ -40,6 +40,7 @@ jobs:
           echo "DBC_FILE=$(echo $lcFile).dbc" >> $GITHUB_ENV
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
+          echo "DBF_FILE=$(echo $lcFile).dbc" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -57,19 +58,26 @@ jobs:
           
       - name: Install cantools
         run: python3 -m pip install cantools
+        
+      - name: Install canmatrix
+        run: python3 -m pip install canmatrix
           
       - name: Convert JSON file to dbc
         run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }} --out ${{ env.DBC_FILE }}
         
       - name: Generate .c .h
-        run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }}
+        run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
+        
+      - name: Convert dbc to dbf
+        run: canconvert ${{ env.DBC_FILE }} 
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{env.JSON_FILES_DIR}}
+          name: ${{ env.JSON_FILES_DIR }}
           path: |
-            ${{env.DBC_FILE}}
-            ${{env.C_FILE}}
-            ${{env.H_FILE}}
+            ${{ env.DBC_FILE }}
+            ${{ env.C_FILE }}
+            ${{ env.H_FILE }}
+            ${{ env.DBF_FILE }}
           
