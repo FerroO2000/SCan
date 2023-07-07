@@ -85,8 +85,14 @@ jobs:
       - name: Convert dbc to dbf
         run: canconvert ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
         
-      - name: print dir
-        run: ls -R
+      - name: Push to repo
+        run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./${{ env.ARTIFACT_DIR }}
+          git commit -m "generated utils from JSON"
+          git push 
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
