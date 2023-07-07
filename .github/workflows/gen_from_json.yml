@@ -9,7 +9,7 @@ on:
 
 env:
   JSON_FILES_DIR: SC22EVO
-  PYTHON_VERSION: 3.10
+  PYTHON_VERSION: '3.10'
 
 jobs:
   list-json-files:
