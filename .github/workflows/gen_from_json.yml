@@ -10,6 +10,7 @@ on:
 env:
   JSON_FILES_DIR: SC22EVO
   PYTHON_VERSION: '3.10'
+  ARTIFACT_DIR: artifacts
 
 jobs:
   list-json-files:
@@ -33,13 +34,14 @@ jobs:
           
       - name: Get filenames
         run: |
+          mkdir ${{ env.ARTIFACT_DIR }}
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           lcPath=${path,,}
           lcFile=$(basename $lcPath)
-          echo "DBC_FILE=artifacts/$(echo $lcFile).dbc" >> $GITHUB_ENV
+          echo "DBC_FILE=$(echo ${{ env.ARTIFACT_DIR }})/$(echo $lcFile).dbc" >> $GITHUB_ENV
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
-          echo "DBF_FILE=artifacts/$(echo $lcFile).dbf" >> $GITHUB_ENV
+          echo "DBF_FILE=$(echo ${{ env.ARTIFACT_DIR }})/$(echo $lcFile).dbf" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -75,7 +77,10 @@ jobs:
         run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }} --out ${{ env.DBC_FILE }}
         
       - name: Generate .c .h
-        run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }}
+        run: |
+          python3 -m cantools generate_c_source ${{ env.DBC_FILE }}
+          mv ${{ env.C_FILE }} ${{ env.ARTIFACT_DIR }}
+          mv ${{ env.H_FILE }} ${{ env.ARTIFACT_DIR }}
         
       - name: Convert dbc to dbf
         run: canconvert ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
@@ -88,9 +93,5 @@ jobs:
         with:
           name: ${{ env.JSON_FILES_DIR }}
           path: |
-            ${{ env.DBC_FILE }}
-            ${{ env.C_FILE }}
-            ${{ env.H_FILE }}
-            ${{ env.DBF_FILE }}
-            ${{ env.XLSX_FILE }}
+            ${{ env.ARTIFACT_DIR }}
           
