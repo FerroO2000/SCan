@@ -2,8 +2,8 @@ name: Generate Utils From JSON
 
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "master" ]
+  #push:
+    #branches: [ "master" ]
 
   workflow_dispatch:
 
@@ -36,10 +36,10 @@ jobs:
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           lcPath=${path,,}
           lcFile=$(basename $lcPath)
-          echo "DBC_FILE=$(echo $lcFile).dbc" >> $GITHUB_ENV
+          echo "DBC_FILE=artifacts/$(echo $lcFile).dbc" >> $GITHUB_ENV
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
-          echo "DBF_FILE=$(echo $lcFile).dbf" >> $GITHUB_ENV
+          echo "DBF_FILE=artifacts/$(echo $lcFile).dbf" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -79,6 +79,9 @@ jobs:
         
       - name: Convert dbc to dbf
         run: canconvert ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
+        
+      - name: print dir
+        run: ls -R
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
