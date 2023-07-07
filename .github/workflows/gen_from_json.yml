@@ -1,12 +1,10 @@
 name: GenFromJSON
 
-# Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches: [ "master" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
@@ -41,6 +39,7 @@ jobs:
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
           echo "DBF_FILE=$(echo $lcFile).dbf" >> $GITHUB_ENV
+          echo "XLSX_FILE=$(echo $lcFile).xlsx" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -56,10 +55,20 @@ jobs:
         with:
           python-version: '3.9'
           
+      
+      - name: Cache pip packages
+        if: pip-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-cache
+          
       - name: Install cantools
+        if: steps.pip-cache.outputs.cache-hit != 'true'
         run: python3 -m pip install cantools
         
       - name: Install canmatrix
+        if: steps.pip-cache.outputs.cache-hit != 'true'
         run: python3 -m pip install canmatrix
           
       - name: Convert JSON file to dbc
@@ -71,6 +80,9 @@ jobs:
       - name: Convert dbc to dbf
         run: canconvert ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
         
+      - name: Convert dbc to xlsx
+        run: canconvert ${{ env.DBC_FILE }} ${{ env.XLSX_FILE }}
+        
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
         with:
@@ -80,4 +92,5 @@ jobs:
             ${{ env.C_FILE }}
             ${{ env.H_FILE }}
             ${{ env.DBF_FILE }}
+            ${{ env.XLSX_FILE }}
           
