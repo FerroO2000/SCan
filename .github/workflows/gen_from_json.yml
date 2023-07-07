@@ -40,7 +40,7 @@ jobs:
           echo "DBC_FILE=$(echo $lcFile).dbc" >> $GITHUB_ENV
           echo "C_FILE=$(echo $lcFile).c" >> $GITHUB_ENV
           echo "H_FILE=$(echo $lcFile).h" >> $GITHUB_ENV
-          echo "DBF_FILE=$(echo $lcFile).dbc" >> $GITHUB_ENV
+          echo "DBF_FILE=$(echo $lcFile).dbf" >> $GITHUB_ENV
           
       - name: Download latest jsodbc release
         uses: robinraju/release-downloader@v1.8
@@ -66,10 +66,10 @@ jobs:
         run: ./jsondbc/jsondbc convert --in ${{ matrix.json-file }} --out ${{ env.DBC_FILE }}
         
       - name: Generate .c .h
-        run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
+        run: python3 -m cantools generate_c_source ${{ env.DBC_FILE }}
         
       - name: Convert dbc to dbf
-        run: canconvert ${{ env.DBC_FILE }} 
+        run: canconvert ${{ env.DBC_FILE }} ${{ env.DBF_FILE }}
         
       - name: Upload dbc artifact
         uses: actions/upload-artifact@v3
