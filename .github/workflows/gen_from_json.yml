@@ -1,16 +1,15 @@
 name: Generate Utils From JSON
 
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  #push:
-    #branches: [ "master" ]
+  push:
+    branches: [ "master" ]
 
   workflow_dispatch:
 
 env:
   JSON_FILES_DIR: SC22EVO
   PYTHON_VERSION: '3.10'
-  ARTIFACT_DIR: tmp/SC22EVO
+  ARTIFACT_DIR: SC22EVO
 
 jobs:
   list-json-files:
@@ -101,9 +100,8 @@ jobs:
         env:
           REPO: self
           BRANCH: build
-          FOLDER: ${{ env.ARTIFACT_DIR }}
+          FOLDER: .
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TARGET_DIR: ${{ env.JSON_FILES_DIR }}
           SKIP_EMPTY_COMMITS: true
           MESSAGE: generated from ${{ matrix.json-file }} at {sha}
         
