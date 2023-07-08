@@ -99,9 +99,9 @@ jobs:
         env:
           REPO: self
           BRANCH: build
-          FOLDER: .
+          FOLDER: ./
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SKIP_EMPTY_COMMITS: true
+          #SKIP_EMPTY_COMMITS: true
           MESSAGE: generated from ${{ matrix.json-file }} at {sha}
         
           
