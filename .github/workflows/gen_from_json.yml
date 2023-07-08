@@ -102,5 +102,5 @@ jobs:
           git config user.email github-actions@github.com
           git add ./${{ env.ARTIFACT_DIR }}
           git commit -m "generated utils from ${{ matrix.json-file }}"
-          git push build
+          git push -u build
           
