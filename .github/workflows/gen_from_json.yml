@@ -36,6 +36,7 @@ jobs:
         run: |
           mkdir -p ${{ env.ARTIFACT_DIR }}
           mkdir -p ${{ env.ARTIFACT_DIR }}/c_source
+          cp ${{ matrix.json-file }} ${{ env.ARTIFACT_DIR }}
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           file=$(basename $path)
           lcPath=${path,,}
@@ -106,5 +107,7 @@ jobs:
           FOLDER: ${{ env.ARTIFACT_DIR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET_DIR: ${{ env.JSON_FILES_DIR }}
+          SKIP_EMPTY_COMMITS: true
+          MESSAGE: generated from ${{ matrix.json-file }}
         
           
