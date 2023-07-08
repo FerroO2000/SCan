@@ -35,7 +35,6 @@ jobs:
         run: |
           mkdir -p ${{ env.ARTIFACT_DIR }}
           mkdir -p ${{ env.ARTIFACT_DIR }}/c_source
-          cp ${{ matrix.json-file }} ${{ env.ARTIFACT_DIR }}
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           file=$(basename $path)
           lcPath=${path,,}
