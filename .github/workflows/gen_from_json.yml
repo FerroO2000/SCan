@@ -46,7 +46,7 @@ jobs:
           echo "XLSX_FILE=$(echo ${{ env.ARTIFACT_DIR }})/$(echo $file).xlsx" >> $GITHUB_ENV
           echo "CSV_FILE=$(echo ${{ env.ARTIFACT_DIR }})/$(echo $file).csv" >> $GITHUB_ENV
           mkdir tmp
-          cp -R * tmp
+          find . ! -regex '.*/tmp' ! -regex '.' -exec cp -r '{}' tmp \
           ls -R
           
       - name: Download latest jsodbc release
