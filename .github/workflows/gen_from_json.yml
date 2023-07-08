@@ -10,7 +10,7 @@ on:
 env:
   JSON_FILES_DIR: SC22EVO
   PYTHON_VERSION: '3.10'
-  ARTIFACT_DIR: SC22EVO
+  ARTIFACT_DIR: tmp/SC22EVO
 
 jobs:
   list-json-files:
@@ -95,6 +95,9 @@ jobs:
       - name: Convert dbc to csv
         run: canconvert ${{ env.DBC_FILE }} ${{ env.CSV_FILE }}
         
+      - name: print dir
+        run: ls -R
+      
       - name: Push to build
         uses: s0/git-publish-subdir-action@develop
         env:
@@ -102,5 +105,6 @@ jobs:
           BRANCH: build
           FOLDER: ${{ env.ARTIFACT_DIR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_DIR: ${{ env.JSON_FILES_DIR }}
         
           
