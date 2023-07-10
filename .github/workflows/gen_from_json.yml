@@ -1,15 +1,16 @@
 name: Generate Utils From JSON
 
 on:
-  push:
-    branches: [ "master" ]
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  #push:
+    #branches: [ "master" ]
 
   workflow_dispatch:
 
 env:
   JSON_FILES_DIR: SC22EVO
   PYTHON_VERSION: '3.10'
-  ARTIFACT_DIR: SC22EVO
+  ARTIFACT_DIR: tmp/SC22EVO
 
 jobs:
   list-json-files:
@@ -22,8 +23,22 @@ jobs:
         id: set-matrix
         run: echo "matrix=$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
           
+  sync-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Merge master into build
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: master
+          target_branch: build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: Merge master into build
+          
   generate:
-    needs: list-json-files
+    needs: [list-json-files, sync-branch]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,6 +50,7 @@ jobs:
         run: |
           mkdir -p ${{ env.ARTIFACT_DIR }}
           mkdir -p ${{ env.ARTIFACT_DIR }}/c_source
+          cp ${{ matrix.json-file }} ${{ env.ARTIFACT_DIR }}
           path=$(echo ${{ matrix.json-file }} | cut -d. -f1)
           file=$(basename $path)
           lcPath=${path,,}
@@ -99,9 +115,10 @@ jobs:
         env:
           REPO: self
           BRANCH: build
-          FOLDER: ./
+          FOLDER: ${{ env.ARTIFACT_DIR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #SKIP_EMPTY_COMMITS: true
+          TARGET_DIR: ${{ env.JSON_FILES_DIR }}
+          SKIP_EMPTY_COMMITS: true
           MESSAGE: generated from ${{ matrix.json-file }} at {sha}
         
           
