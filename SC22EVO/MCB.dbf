@@ -1,0 +1,277 @@
+//******************************BUSMASTER Messages and signals Database ******************************//
+
+[DATABASE_VERSION] 1.3
+
+[PROTOCOL] CAN
+
+[BUSMASTER_VERSION] [3.2.2]
+[NUMBER_OF_MESSAGES] 22
+[START_MSG] Sens_Front_1,5,8,4,0,S,sens_front
+[START_SIGNALS] Throttle_0_Voltage_mV,16,1,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Throttle_1_Voltage_mV,16,3,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Steering_Voltage_mV,16,5,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Brake_Straingauge_Voltage_mV,16,7,0,U,65535,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] ShtdwnLineMidSecStatus,6,2,4,0,S,tlb_bat
+[START_SIGNALS] ShtdwnActiveLvlMidSecIn,2,1,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] ShtdwnActiveLvlPostAMSErrRly,2,1,2,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] ShtdwnActiveLvlPostIMDErrRly,2,1,4,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] ShtdwnVoltageLvlPostPrchResist,8,1,6,U,252.101,0,1,0,0.119,V,,dspace
+[END_MSG]
+
+[START_MSG] ShtdwnLineFinSecStatus,7,2,2,0,S,tlb_bat
+[START_SIGNALS] ShtdwnActiveLvlFinSecIn,2,1,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] ShtdwnVoltageLvlPostDlyCaps,8,1,2,U,252.101,0,1,0,0.119,V,,dspace
+[END_MSG]
+
+[START_MSG] Sens_Front_2,16,6,3,0,S,Vector__XXX
+[START_SIGNALS] Pot_FL_Voltage_mV,16,1,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Pot_FR_Voltage_mV,16,3,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] BrakePressure_Voltage_mV,16,5,0,U,65535,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] Sens_Rear_1,17,6,3,0,S,Vector__XXX
+[START_SIGNALS] Pot_RL_Voltage_mV,16,1,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Pot_RR_Voltage_RR,16,3,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] BrakePressure_Rear_Voltage_mV,16,5,0,U,65535,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] dSpace_RTD_ACK,37,1,3,0,S,Vector__XXX
+[START_SIGNALS] CTOR_EN_ACK,1,1,0,I,1,0,1,0,1,,,
+[START_SIGNALS] RTD_EN_ACK,1,1,1,I,1,0,1,0,1,,,
+[START_SIGNALS] Reboot_FSM,1,1,2,I,1,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] ReadyToDriveControl,38,1,1,0,S,dash
+[START_SIGNALS] ReadyToDriveEnStatus,2,1,0,U,1,0,1,0,1,,,dspace
+[END_MSG]
+
+[START_MSG] ShtdwnLineInitSecStatus,48,2,5,0,S,sens_rear
+[START_SIGNALS] isShutClosed_postBSPD,2,1,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] isShutClosed_preFunghi,2,1,2,I,1,0,1,0,1,,,
+[START_SIGNALS] isShutClosed_postInvMono,2,1,4,I,1,0,1,0,1,,,
+[START_SIGNALS] isShutClosed_postInvFR,2,1,6,I,1,0,1,0,1,,,
+[START_SIGNALS] isBSPDinError,2,2,0,U,1,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] Sens_Front_ShutdownStatus,49,1,4,0,S,Vector__XXX
+[START_SIGNALS] isShutClosed_preInertia,1,1,0,I,1,0,1,0,1,,,
+[START_SIGNALS] isShutClosed_postInertia,1,1,1,I,1,0,1,0,1,,,
+[START_SIGNALS] isShutClosed_postBOTS,1,1,2,I,1,0,1,0,1,,,
+[START_SIGNALS] isShutClosed_postCockpit,1,1,3,I,1,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] TlbBatIntrnlFunc,70,8,20,0,S,tlb_bat
+[START_SIGNALS] AmsErrLtch,2,1,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] ImdErrLtch,2,1,2,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] ShtdwnPrchRlyEn,2,1,4,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] Shrt2GndAirNeg,2,1,6,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] Shrt2GndAirPos,2,2,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] Shrt2GndAir,2,2,2,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] DcBusVehicleSideOver60V,2,2,4,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AirNegClsdIntState,2,2,6,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AirPosClsdIntState,2,3,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] DcBusPrchRlyEnIntState,2,3,2,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AirNegClsdAuxState,2,3,4,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AirPosClsdAuxState,2,3,6,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] DcBusPrchRlyEnAuxState,2,4,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AirNegClsdImpErr,2,4,2,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AirPosClsdImpErr,2,4,4,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] DcBusPrchRlyEnImpErr,2,4,6,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] DcBusVehSideOver60VImpErr,2,5,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AnyImpErr,2,5,2,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] AnyImpErrLtch,2,5,4,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] TsalGreenEnActiveLevel,2,5,6,U,1,0,1,0,1,,,dspace
+[END_MSG]
+
+[START_MSG] LvBatteryPackCellsVoltage1,256,8,4,0,S,bms_lv
+[START_SIGNALS] Cell1Voltage,16,1,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[START_SIGNALS] Cell2Voltage,16,3,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[START_SIGNALS] Cell3Voltage,16,5,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[START_SIGNALS] Cell4Voltage,16,7,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[END_MSG]
+
+[START_MSG] LvBatteryPackCellsVoltage2,257,6,3,0,S,bms_lv
+[START_SIGNALS] Cell5Voltage,16,1,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[START_SIGNALS] Cell6Voltage,16,3,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[START_SIGNALS] Cell7Voltage,16,5,0,U,118167,52631.6,1,2000,0.038,mV,,dspace
+[END_MSG]
+
+[START_MSG] LvBatteryPackGeneralData,258,4,2,0,S,bms_lv
+[START_SIGNALS] HallCurrentSensorRawValue,16,1,0,U,65535,0,1,0,0.076,V,,dspace
+[START_SIGNALS] LvBatteryPackTotalVoltage,16,3,0,U,117969,52434.5,1,14000,0.267,mV,,dspace
+[END_MSG]
+
+[START_MSG] BmsLvStatus,259,2,2,0,S,bms_lv
+[START_SIGNALS] LvRlyClsd,1,1,0,U,1,0,1,0,1,,,dspace
+[START_SIGNALS] BmsLvStatusMessage,8,1,1,U,255,0,1,0,1,,,dspace
+[END_MSG]
+
+[START_MSG] LvBatteryPackCellsTemp,261,8,7,0,S,bms_lv
+[START_SIGNALS] isFirstMessage,1,1,0,I,1,0,1,0,1,,,dspace
+[START_SIGNALS] Ntc1Resistance,10,1,1,U,1055,32,1,1000,31.25,Ohm,,dspace
+[START_SIGNALS] Ntc2Resistance,10,2,3,U,1055,32,1,1000,31.25,Ohm,,dspace
+[START_SIGNALS] Ntc3Resistance,10,3,5,U,1055,32,1,1000,31.25,Ohm,,dspace
+[START_SIGNALS] Ntc4Resistance,10,4,7,U,1055,32,1,1000,31.25,Ohm,,dspace
+[START_SIGNALS] Ntc5Resistance,10,6,1,U,1055,32,1,1000,31.25,Ohm,,dspace
+[START_SIGNALS] Ntc6Resistance,10,7,6,U,1055,32,1,1000,31.25,Ohm,,dspace
+[END_MSG]
+
+[START_MSG] Sens_Front_3,288,8,4,0,S,Vector__XXX
+[START_SIGNALS] Straingauge_PushFR_Voltage_mV,16,1,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Straingauge_TieFR_Voltage_mV,16,3,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Straingauge_PushFL_Voltage_mV,16,5,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Straingauge_TieFL_Voltage_mV,16,7,0,U,65535,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] Sens_Rear_3,289,8,4,0,S,Vector__XXX
+[START_SIGNALS] Straingauge_PushRR_Voltage_mV,16,1,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Straingauge_TieRR_Voltage_mV,16,3,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Straingauge_PushRL_Voltage_mV,16,5,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] Straingauge_TieRL_Voltage_mV,16,7,0,U,65535,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] dSpace_PeripheralsCTRL,512,3,3,0,S,Vector__XXX
+[START_SIGNALS] BrakeLightON_CTRL,1,1,0,I,1,0,1,0,1,,,
+[START_SIGNALS] RadFAN_PWM_CTRL,8,2,0,U,255,0,1,0,1,,,
+[START_SIGNALS] BattHVFan_CTRL,8,3,0,U,255,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] FrontNtcsTemperature,1024,8,6,0,S,sens_front
+[START_SIGNALS] Ntc1Resistance,10,1,0,U,1023,0,1,0,1,Ohm,,dspace
+[START_SIGNALS] Ntc2Resistance,10,2,2,U,1023,0,1,0,1,Ohm,,dspace
+[START_SIGNALS] Ntc3Resistance,10,3,4,U,1023,0,1,0,1,Ohm,,dspace
+[START_SIGNALS] Ntc4Resistance,10,4,6,U,1023,0,1,0,1,Ohm,,dspace
+[START_SIGNALS] Ntc1SpareResistance,10,6,0,U,1023,0,1,0,1,Ohm,,dspace
+[START_SIGNALS] Ntc2SpareResistance,10,7,2,U,1023,0,1,0,1,Ohm,,dspace
+[END_MSG]
+
+[START_MSG] Sens_Rear_NTC,1025,8,6,0,S,Vector__XXX
+[START_SIGNALS] NTC_1_Resistance,10,1,0,U,1023,0,1,0,1,,,
+[START_SIGNALS] NTC_2_Resistance,10,2,2,U,1023,0,1,0,1,,,
+[START_SIGNALS] NTC_3_Resistance,10,3,4,U,1023,0,1,0,1,,,
+[START_SIGNALS] NTC_4_Resistance,10,4,6,U,1023,0,1,0,1,,,
+[START_SIGNALS] NTC_5_Resistance,10,6,0,U,1023,0,1,0,1,,,
+[START_SIGNALS] NTC_6_Resistance,10,7,2,U,1023,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] Sens_Rear_2,1026,4,2,0,S,Vector__XXX
+[START_SIGNALS] CoolingPressure_DX_Voltage_mV,16,1,0,U,65535,0,1,0,1,,,
+[START_SIGNALS] CoolingPressure_SX_Voltage_mV,16,3,0,U,65535,0,1,0,1,,,
+[END_MSG]
+
+[START_MSG] Steering_MotorControl_Debug,1280,1,4,0,S,Vector__XXX
+[START_SIGNALS] FrontLeft_ON,1,1,0,I,1,0,1,0,1,,,
+[START_SIGNALS] FrontRight_ON,1,1,1,I,1,0,1,0,1,,,
+[START_SIGNALS] RearLeft_ON,1,1,2,I,1,0,1,0,1,,,
+[START_SIGNALS] RearRight_ON,1,1,3,I,1,0,1,0,1,,,
+[END_MSG]
+
+[NODE] sens_front,tlb_bat,dspace,dash,sens_rear,bms_lv
+[START_DESC]
+
+[START_DESC_MSG]
+5 S "";
+6 S "shutdown line middle section status";
+7 S "shutdown line final section status";
+16 S "";
+17 S "";
+37 S "";
+38 S "Ready To Drive control message";
+48 S "shutdown line initial section status";
+49 S "";
+70 S "tlb battery internal functions";
+256 S "Low Voltage Battery Pack, Battery Cells Voltage message 1";
+257 S "Low Voltage Battery Pack, Battery Cells Voltage message 2";
+258 S "General data about the low voltage battery pack";
+259 S "Status form BMS-LV ECU";
+261 S "Low Voltage Battery Pack, Battery Cells Voltage message 2";
+288 S "";
+289 S "";
+512 S "";
+1024 S "Temperatures of NTCs in the front of the car";
+1025 S "";
+1026 S "";
+1280 S "";
+[END_DESC_MSG]
+[START_DESC_NODE]
+[END_DESC_NODE]
+[START_DESC_SIG]
+6 S ShtdwnActiveLvlMidSecIn "Shutdown line active level @ middle section input";
+6 S ShtdwnActiveLvlPostAMSErrRly "Shutdown line active level post AMS error relay";
+6 S ShtdwnActiveLvlPostIMDErrRly "Shutdown line active level post IMD error relay";
+6 S ShtdwnVoltageLvlPostPrchResist "Shutdown line voltage level post precharge resistor of shutdown line";
+7 S ShtdwnActiveLvlFinSecIn "Shutdown line active level @ final section input";
+7 S ShtdwnVoltageLvlPostDlyCaps "Shutdown line voltage level post delay capacitors of shutdown line";
+38 S ReadyToDriveEnStatus "Redy To Drive Enable signal status";
+48 S isShutClosed_postBSPD "Shutdown line active level @ middle section input";
+70 S AmsErrLtch "AMS error latched active, disables AMS Error Relay";
+70 S ImdErrLtch "IMD error latched active, disables IMD Error Relay";
+70 S ShtdwnPrchRlyEn "Shutdown Precharge Relay Enable status, enables Shutdwon Precharge Relay";
+70 S Shrt2GndAirNeg "Shortcircuit to GND detected on AIR negative terminal";
+70 S Shrt2GndAirPos "Shortcircuit to GND detected on AIR positive terminal";
+70 S Shrt2GndAir "Shortcircuit to GND detected on an AIR terminal (either poisitive or negative)";
+70 S DcBusVehicleSideOver60V "High Voltage DC Bus, vehicle side (@ Air Positive), over 60 volt";
+70 S AirNegClsdIntState "AIR negative closed, Intentional State (signal is reliant on shutdown line beeing active)";
+70 S AirPosClsdIntState "AIR positive closed, Intentional State (signal is reliant on shutdown line beeing active)";
+70 S DcBusPrchRlyEnIntState "High Voltage DC bus precharge relay enable, intentional state (signal is reliant on shutdown line beeing active)";
+70 S AirNegClsdAuxState "AIR negative closed, auxiliary/actual state (signal is reliant on shutdown line beegin active)";
+70 S AirPosClsdAuxState "AIR positive closed, auxiliary/actual state (signal is reliant on shutdown line beegin active)";
+70 S DcBusPrchRlyEnAuxState "High Voltage DC bus precharge relay enable, auxiliary/actual state (signal is reliant on shutdown line beeing active)";
+70 S AirNegClsdImpErr "AIR negative closed implausibility error active (Intentional State != Auxiliary State)";
+70 S AirPosClsdImpErr "AIR positive closed implausibility error active (Intentional State != Auxiliary State)";
+70 S DcBusPrchRlyEnImpErr "High Voltage DC bus precharge relay enable, implausibility error active (Intentional State != Auxiliary State)";
+70 S DcBusVehSideOver60VImpErr "High Voltage DC Bus, vehicle side (@ Air Positive), over 60 volt, implausibility error active (more then 60V but can't be SUPER DANGER)";
+70 S AnyImpErr "An/Any implausibility error is active";
+70 S AnyImpErrLtch "An/Any implausibility error is active, latched value";
+70 S TsalGreenEnActiveLevel "TSAL green enable active level";
+256 S Cell1Voltage "Battery Cell1 Voltage (milliVolts)";
+256 S Cell2Voltage "Battery Cell2 Voltage (milliVolts)";
+256 S Cell3Voltage "Battery Cell3 Voltage (milliVolts)";
+256 S Cell4Voltage "Battery Cell4 Voltage (milliVolts)";
+257 S Cell5Voltage "Battery Cell5 Voltage (milliVolts)";
+257 S Cell6Voltage "Battery Cell6 Voltage (milliVolts)";
+257 S Cell7Voltage "Battery Cell7 Voltage (milliVolts)";
+258 S HallCurrentSensorRawValue "Hall Current Sensor Raw Value (Volts)";
+258 S LvBatteryPackTotalVoltage "Low Voltage Battery Pack total voltage at terminal ends (millivolts)";
+259 S LvRlyClsd "Low Voltage Relay Closed status";
+259 S BmsLvStatusMessage "BMS LV Status message bitset";
+261 S isFirstMessage "First time sending this message flag";
+261 S Ntc1Resistance "NTC1 Resistance - monitor of Cell1 temperature";
+261 S Ntc2Resistance "NTC2 Resistance - monitor of Cell2 temperature";
+261 S Ntc3Resistance "NTC3 Resistance - monitor of Cell3 temperature";
+261 S Ntc4Resistance "NTC4 Resistance - monitor of Cell4 temperature";
+261 S Ntc5Resistance "NTC5 Resistance - monitor of Cell5 temperature";
+261 S Ntc6Resistance "NTC6 Resistance - monitor of Cell6 temperature";
+1024 S Ntc1Resistance "NTC1 Resistance";
+1024 S Ntc2Resistance "NTC2 Resistance";
+1024 S Ntc3Resistance "NTC3 Resistance";
+1024 S Ntc4Resistance "NTC4 Resistance";
+1024 S Ntc1SpareResistance "Ntc1Spare Resistance";
+1024 S Ntc2SpareResistance "Ntc2Spare Resistance";
+[END_DESC_SIG]
+[END_DESC]
+
+[START_PARAM]
+[START_PARAM_NET]
+[END_PARAM_NET]
+[START_PARAM_NODE]
+[END_PARAM_NODE]
+[START_PARAM_MSG]
+"GenMsgBackgroundColor",STRING
+"GenMsgForegroundColor",STRING
+"MsgPeriodMS",INT,0,65535
+"filterlabeling",INT,0,0
+"matchingcriteria",INT,0,0
+[END_PARAM_MSG]
+[START_PARAM_SIG]
+[END_PARAM_SIG]
+[START_PARAM_VAL]
+[START_PARAM_NODE_VAL]
+[END_PARAM_NODE_VAL]
+[START_PARAM_MSG_VAL]
+[END_PARAM_MSG_VAL]
+[START_PARAM_SIG_VAL]
+[END_PARAM_SIG_VAL]
+[END_PARAM_VAL]
