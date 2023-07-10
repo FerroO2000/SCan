@@ -23,8 +23,22 @@ jobs:
         id: set-matrix
         run: echo "matrix=$(ls $JSON_FILES_DIR/*.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
           
+  sync-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Merge master into build
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: master
+          target_branch: build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: Merge master into build
+          
   generate:
-    needs: list-json-files
+    needs: [list-json-files, sync-branch]
     runs-on: ubuntu-latest
     strategy:
       matrix:
