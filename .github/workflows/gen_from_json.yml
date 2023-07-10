@@ -116,7 +116,7 @@ jobs:
           BRANCH: build
           FOLDER: ${{ env.ARTIFACT_DIR }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TARGET_DIR: ${{ env.JSON_FILES_DIR }}
+          TARGET_DIR: ${{ env.JSON_FILES_DIR }}/artifacts
           SKIP_EMPTY_COMMITS: true
           MESSAGE: generated from ${{ matrix.json-file }} at {sha}
         
